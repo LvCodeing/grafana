@@ -827,7 +827,6 @@ jobs:
     steps:
       - checkout
       - halt-if-matching-files
-        parameters:
           regex: ^.*\.go$
           inverse: true
       - run:
