@@ -61,6 +61,25 @@ commands:
             chmod +x grabpl
             mv grabpl /tmp
 
+  halt-if-matching-files:
+    description: "Requires files of last commit to match provided glob pattern. If no matches are found, the step will halt and be marked as successful."
+    parameters:
+      regex:
+        type: string
+      inverse:
+        type: boolean
+        default: false
+    steps:
+      - run:
+          name: "Halt if matching changed files"
+          command: |
+            git log --oneline --pretty="format:" --name-only master.. | awk 'NF' | sort -u | egrep -q '<< parameters.regex >>'
+            if [ << parameters.inverse >> = true ]; then
+              git log --oneline --pretty="format:" --name-only master.. | awk 'NF' | sort -u | egrep -q '<< parameters.regex >>' && circleci step halt
+            else
+              git log --oneline --pretty="format:" --name-only master.. | awk 'NF' | sort -u | egrep -q '<< parameters.regex >>' || circleci step halt
+            fi
+
 jobs:
   build-backend:
     description: "Build a certain variant of Grafana back-end binaries"
@@ -807,6 +826,10 @@ jobs:
       GOGC: 20
     steps:
       - checkout
+      - halt-if-matching-files
+        parameters:
+          regex: ^.*\.go$
+          inverse: true
       - run:
           name: Install Go linters
           command: |
