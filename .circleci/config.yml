@@ -74,9 +74,9 @@ commands:
           name: "Halt if matching changed files"
           command: |
             if [ << parameters.inverse >> = true ]; then
-              git log --oneline --pretty="format:" --name-only origin/master.. | awk 'NF' | sort -u | grep -q '<< parameters.regex >>' && circleci step halt
-            else
               git log --oneline --pretty="format:" --name-only origin/master.. | awk 'NF' | sort -u | grep -q '<< parameters.regex >>' || circleci step halt
+            else
+              git log --oneline --pretty="format:" --name-only origin/master.. | awk 'NF' | sort -u | grep -q '<< parameters.regex >>' && circleci step halt
             fi
 
 jobs:
