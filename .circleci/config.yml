@@ -913,6 +913,9 @@ jobs:
     executor: base
     steps:
       - checkout
+      - halt-if-matching-files:
+          regex: ^docs/.*
+          inverse: true
       - setup_remote_docker
       - run:
           name: CI job started
