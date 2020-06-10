@@ -827,8 +827,8 @@ jobs:
     steps:
       - checkout
       - halt-if-matching-files
-          regex: ^.*\.go$
-          inverse: true
+        regex: ^.*\.go$
+        inverse: true
       - run:
           name: Install Go linters
           command: |
