@@ -73,7 +73,7 @@ commands:
       - run:
           name: "Halt if matching changed files"
           command: |
-            git log --oneline --pretty="format:" --name-only master..
+            git log --oneline --pretty="format:" --name-only origin/master..
             if [ << parameters.inverse >> = true ]; then
               git log --oneline --pretty="format:" --name-only master.. | awk 'NF' | sort -u | egrep -q '<< parameters.regex >>' && circleci step halt
             else
