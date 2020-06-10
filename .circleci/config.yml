@@ -75,9 +75,9 @@ commands:
           command: |
             git log --oneline --pretty="format:" --name-only origin/master.. | awk 'NF' | sort -u | grep '<< parameters.regex >>'
             if [ << parameters.inverse >> = true ]; then
-              git log --oneline --pretty="format:" --name-only master.. | awk 'NF' | sort -u | egrep -q '<< parameters.regex >>' && circleci step halt
+              git log --oneline --pretty="format:" --name-only origin/master.. | awk 'NF' | sort -u | grep '<< parameters.regex >>' && circleci step halt
             else
-              git log --oneline --pretty="format:" --name-only master.. | awk 'NF' | sort -u | egrep -q '<< parameters.regex >>' || circleci step halt
+              git log --oneline --pretty="format:" --name-only origin/master.. | awk 'NF' | sort -u | grep '<< parameters.regex >>' || circleci step halt
             fi
 
 jobs:
