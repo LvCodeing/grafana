@@ -826,7 +826,7 @@ jobs:
       GOGC: 20
     steps:
       - checkout
-      - halt-if-matching-files
+      - halt-if-matching-files:
         regex: ^.*\.go$
         inverse: true
       - run:
