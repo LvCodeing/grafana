@@ -911,6 +911,9 @@ jobs:
 
   build-docs-website:
     executor: base
+    steps:
+      - checkout
+      - halt-if-matching-files:
           regex: ^docs/.*
           inverse: true
       - setup_remote_docker
@@ -1333,6 +1336,9 @@ workflows:
             - package-oss
       - build-docs-website:
           filters: *filter-not-release-or-master
+          requires:
+            - mysql-integration-test
+            - postgres-integration-test
       - deploy-to-kubernetes:
           filters: *filter-only-master
           requires:
