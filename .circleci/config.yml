@@ -71,7 +71,7 @@ commands:
         default: false
     steps:
       - run:
-          name: "Halt if matching changed files"
+          name: "Halt if not matching changed files << parameters.regex >>, inverse: << parameters.inverse >>"
           command: |
             echo "Revision: << pipeline.git.revision >>"
             echo "Base revision: << pipeline.git.base_revision >>"
